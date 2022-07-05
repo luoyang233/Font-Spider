@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>font生成（bug/优化找罗阳）</title>
+  </head>
+
+  <body>
+    <span class="tips">
+      1.选择字体源文件包(.ttf文件，没有找UI要) <br />
+      2.输入需要生成的字体集(可重复，自动去重) <br />
+      3.生成，选择输出目录 <br />
+      4.输出目录下的xx_dist.tff
+      <br />
+    </span>
+    <textarea rows="10" cols="95"></textarea>
+    <button class="button select">选择文件</button>
+    <button class="button gen">生成</button>
+    <h5 class="source"></h5>
+    <h5 class="error"></h5>
+    <p style="display: none">[value]</p>
+  </body>
+
+  <script>
+    const text = document.querySelector('textarea');
+    const source = document.querySelector('.source');
+    const error = document.querySelector('.error');
+    const genBtn = document.querySelector('.gen');
+    const selectBtn = document.querySelector('.select');
+
+    genBtn.addEventListener('click', function () {
+      if (!source.innerHTML) {
+        error.innerHTML = '选择字体源文件！';
+        return;
+      }
+      if (!text.value) {
+        error.innerHTML = '输入字体集！';
+        return;
+      }
+      genBtn.disabled = true;
+      genBtn.innerHTML = 'loading...';
+      error.innerHTML = '';
+
+      API.gen(text.value).then(() => {
+        genBtn.disabled = false;
+        genBtn.innerHTML = '生成';
+      });
+    });
+
+    selectBtn.addEventListener('click', function () {
+      API.select().then(x => {
+        if (!x) {
+          return;
+        }
+        if (x.slice(-4) !== '.ttf') {
+          error.innerHTML = '非.tff文件';
+          return;
+        }
+        error.innerHTML = '';
+        source.innerHTML = x;
+      });
+    });
+  </script>
+
+  <style>
+    @font-face {
+      font-family: 'now';
+      src: url('[source]');
+      font-weight: normal;
+      font-style: normal;
+    }
+
+    p {
+      font-family: 'now';
+    }
+
+    .button {
+      line-height: 25px;
+      padding: 2px 15px;
+      border: 1px solid #999;
+      border-radius: 2px;
+      background: #fff;
+    }
+    .button:hover {
+      cursor: pointer;
+      background: #eee;
+    }
+  </style>
+</html>
