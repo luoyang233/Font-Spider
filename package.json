@@ -9,6 +9,7 @@
     "make": "electron-forge make"
   },
   "author": "罗阳",
+  "description": "字体压缩工具",
   "license": "MIT",
   "devDependencies": {
     "@electron-forge/cli": "^6.0.0-beta.64",
@@ -26,7 +27,12 @@
         "name": "Font Spider",
         "appVersion": "1.0.0",
         "appCopyright": "luoyang(876958238@qq.com)",
-        "icon": "./icon"
+        "icon": "./icon",
+        "win32metadata": {
+          "ProductName": "Font Spider",
+          "CompanyName": "Noah",
+          "FileDescription": "字体压缩工具"
+        }
       },
       "makers": [
         {
