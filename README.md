@@ -17,4 +17,6 @@ npm run make
 ```
 
 ## electron安装慢问题
+```
 npm config set ELECTRON_MIRROR "http://npm.taobao.org/mirrors/electron/"
+```
